@@ -54,6 +54,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     implementation 'androidx.activity:activity-compose:1.4.0'
     implementation "org.hisp.dhis:android-core:1.6.0-SNAPSHOT"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
