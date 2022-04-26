@@ -51,12 +51,27 @@ dependencies {
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    //  Adds a CoroutineScope to ViewModels that's configured to start UI-related coroutines
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation 'androidx.activity:activity-compose:1.4.0'
+    // DHIS2 Android SDK
     implementation "org.hisp.dhis:android-core:1.6.0-SNAPSHOT"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
+    // Main interface for using coroutines in Kotlin
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    // Support for the Android Main thread in coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
+    //Test libraries
     testImplementation 'junit:junit:4.13.2'
+    // Utilities for efficiently testing coroutines
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    // mocks
+    "org.mockito:mockito-core:$mockito_version"
+    //  Architecture Components testing libraries
+    testImplementation "android.arch.core:core-testing:1.1.1"
+
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
