@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -15,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.andresmr.tac.ui.login.LoginScreen
 import com.andresmr.tac.ui.login.LoginViewModel
+import com.andresmr.tac.ui.login.LoginViewModelState
 import com.andresmr.tac.ui.theme.TheAnimalCollectiveTheme
 
 class MainActivity : ComponentActivity() {
@@ -40,18 +40,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun LoginActivityScreen(loginViewModel: LoginViewModel) {
     val uiState by loginViewModel.uiState.collectAsState()
-    LoginScreen(uiState = uiState)
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    TheAnimalCollectiveTheme {
-        Greeting("Android")
-    }
+    LoginScreen(
+        uiState = uiState,
+        onLoginClick = loginViewModel::onLoginClick
+    )
 }

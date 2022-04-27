@@ -7,7 +7,7 @@ import org.hisp.dhis.android.core.user.User
 
 class LoginRepository(private val d2: D2) {
 
-    suspend fun login(): User? = withContext(Dispatchers.IO) {
+    suspend fun login(): User = withContext(Dispatchers.IO) {
         d2.userModule().blockingLogIn(
             "admin",
             "district",

@@ -1,7 +1,18 @@
 package com.andresmr.tac.ui.login
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.andresmr.tac.ui.theme.TheAnimalCollectiveTheme
 
 /**
  * Displays the login route
@@ -10,7 +21,47 @@ import androidx.compose.runtime.Composable
  */
 @Composable
 fun LoginScreen(
-    uiState: LoginViewModelState
+    uiState: LoginViewModelState,
+    onLoginClick: () -> Unit
 ) {
-    Text(text = uiState.errorMessage?.message ?: if (uiState.isLoading) "Loading..." else "Done!")
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
+        Text(
+            text = "Status: ${uiState.status}"
+        )
+        Text(
+            text = "Message: ${uiState.message}"
+        )
+        Button(
+            onClick = { onLoginClick() },
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(text = "Login")
+        }
+
+        if (uiState.isLoading) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewLoginScreen() {
+    val uiState = LoginViewModelState(
+        status = "Not logged in",
+        isLoading = false
+    )
+    TheAnimalCollectiveTheme {
+        LoginScreen(uiState = uiState, {})
+    }
 }
