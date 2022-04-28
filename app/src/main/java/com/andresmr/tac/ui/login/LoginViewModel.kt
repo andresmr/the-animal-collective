@@ -11,12 +11,10 @@ import com.andresmr.tac.ui.login.Status.NOT_LOGGED
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import org.hisp.dhis.android.core.D2Manager
 import org.hisp.dhis.android.core.maintenance.D2Error
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
-    private val loginRepository = LoginRepository(D2Manager.getD2())
     val uiState = MutableStateFlow(LoginViewModelState())
 
     init {
