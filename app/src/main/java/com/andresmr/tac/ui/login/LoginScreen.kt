@@ -33,12 +33,14 @@ fun LoginScreen(
         Text(
             text = "Message: ${uiState.message}"
         )
-        Button(
-            onClick = { onLoginClick() },
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Text(text = "Login")
+        if (uiState.status == Status.NOT_LOGGED || uiState.status == Status.ERROR) {
+            Button(
+                onClick = { onLoginClick() },
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(text = "Login")
+            }
         }
 
         if (uiState.isLoading) {
@@ -57,10 +59,7 @@ fun LoginScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewLoginScreen() {
-    val uiState = LoginViewModelState(
-        status = "Not logged in",
-        isLoading = false
-    )
+    val uiState = LoginViewModelState()
     TheAnimalCollectiveTheme {
         LoginScreen(uiState = uiState, {})
     }
