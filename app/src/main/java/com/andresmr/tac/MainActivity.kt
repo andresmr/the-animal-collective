@@ -6,15 +6,23 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.andresmr.tac.data.LoginRepository
+import com.andresmr.tac.ui.login.LoginScreen
+import com.andresmr.tac.ui.login.LoginViewModel
 import com.andresmr.tac.ui.theme.TheAnimalCollectiveTheme
+import org.hisp.dhis.android.core.D2Manager
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var loginViewModel: LoginViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loginViewModel = LoginViewModel(LoginRepository(D2Manager.getD2()))
         setContent {
             TheAnimalCollectiveTheme {
                 // A surface container using the 'background' color from the theme
@@ -22,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    LoginActivityScreen(loginViewModel = loginViewModel)
                 }
             }
         }
@@ -30,14 +38,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    TheAnimalCollectiveTheme {
-        Greeting("Android")
-    }
+fun LoginActivityScreen(loginViewModel: LoginViewModel) {
+    val uiState by loginViewModel.uiState.collectAsState()
+    LoginScreen(
+        uiState = uiState,
+        onLoginClick = loginViewModel::onLoginClick
+    )
 }
