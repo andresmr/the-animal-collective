@@ -6,17 +6,19 @@ import com.andresmr.tac.ui.login.Status.LOGGED_IN
 import com.andresmr.tac.ui.login.Status.NOT_LOGGED
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.hisp.dhis.android.core.user.User
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.doReturn
@@ -30,10 +32,8 @@ class LoginViewModelTest {
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
-    @Mock
     private val repository: LoginRepository = mock()
 
-    @Mock
     private val user: User = mock {
         on { firstName() } doReturn "admin"
     }
@@ -56,10 +56,11 @@ class LoginViewModelTest {
         `when`(repository.isUserLogged()).thenReturn(false)
 
         //When check is user is logged
-        viewModel = LoginViewModel(repository)
+        launch { viewModel = LoginViewModel(repository) }
+        advanceUntilIdle()
 
         //Then user is not logged
-        assert(viewModel.uiState.value.status == NOT_LOGGED)
+        assertEquals(viewModel.uiState.value.status, NOT_LOGGED)
     }
 
     @Test
@@ -69,9 +70,10 @@ class LoginViewModelTest {
         `when`(repository.getUser()).thenReturn(user)
 
         //When check is user is logged
-        viewModel = LoginViewModel(repository)
+        launch { viewModel = LoginViewModel(repository) }
+        advanceUntilIdle()
 
         //Then user is not logged
-        assert(viewModel.uiState.value.status == LOGGED_IN)
+        assertEquals(viewModel.uiState.value.status, LOGGED_IN)
     }
 }
